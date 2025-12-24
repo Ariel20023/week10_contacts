@@ -9,6 +9,13 @@ services:
       MYSQL_USER: contacts_user
       MYSQL_PASSWORD: contacts_pass
 
+    healthcheck:
+      test: [ "CMD","mysqladmin", "ping", "-h", "localhost" ]
+      interval: 15s
+      timeout: 30s
+      retries: 5
+
+
     volumes:
       - mysql_data:/var/lib/mysql
       - ./sql/init.sql:/docker-entrypoint-initdb.d/init.sql
@@ -23,13 +30,11 @@ services:
       - db
     ports:
       - "8000:80"
-    environment:
-      DB_HOST: db
-      DB_PORT: 3306
-      DB_USER: root
-      DB_PASSWORD: password
-      DB_NAME: contacts_db
+#    environment:
+#      DB_HOST: db
+#      DB_PORT: 3306
+#      DB_USER: root
+#      DB_PASSWORD: password
+#      DB_NAME: contacts_db
 volumes:
   mysql_data:
-
-

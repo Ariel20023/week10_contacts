@@ -6,7 +6,7 @@ from dotenv import load_dotenv
 
 
 
-class Interaction:
+class DatabaseService:
     load_dotenv()
     @staticmethod
     def get_connection():
@@ -19,7 +19,7 @@ class Interaction:
 
     @staticmethod
     def get_all_contacts():
-        conn = Interaction.get_connection()
+        conn = DatabaseService.get_connection()
         cursor = conn.cursor(dictionary=True)
         cursor.execute("SELECT * FROM contacts")
         results = cursor.fetchall()
@@ -29,7 +29,7 @@ class Interaction:
 
     @staticmethod
     def create_contact(first_name,last_name,phone_number):
-        conn = Interaction.get_connection()
+        conn = DatabaseService.get_connection()
         cursor = conn.cursor()
         cursor.execute(
             "INSERT INTO contacts (first_name,last_name,phone_number) VALUES(%s,%s,%s)",
@@ -43,7 +43,7 @@ class Interaction:
 
     @staticmethod
     def update_contact(contact_id, first_name, last_name, phone_number):
-        conn = Interaction.get_connection()
+        conn = DatabaseService.get_connection()
         cursor = conn.cursor()
         cursor.execute(
             "UPDATE contacts SET first_name=%s, last_name=%s, phone_number=%s WHERE id=%s",
@@ -57,7 +57,7 @@ class Interaction:
 
     @staticmethod
     def delete_contact(contact_id):
-        conn = Interaction.get_connection()
+        conn = DatabaseService.get_connection()
         cursor = conn.cursor()
         cursor.execute(
             "DELETE FROM contacts WHERE id=%s",
